@@ -115,7 +115,7 @@ function render() {
 
     // TODO 2
     // Update the curent time remaining on the scoreboard.
-
+    $("#time-remaining").text(model.secondsRemaining);
 
     // if the game has not started yet, just hide the #game container and exit
     if (model.gameHasStarted == false) {
@@ -130,7 +130,7 @@ function render() {
     $("#word-submissions").empty();
     // TODO 10
     // Add a few things to the above code block (underneath "// clear stuff").
-
+    $("#textbox").removeClass("bad-attempt");
 
     // reveal the #game container
     $("#game").show();
@@ -144,9 +144,8 @@ function render() {
 
 
     // Set the value of the textbox
-    $("#textbox").val(model.currentAttempt);
-    // TODO 3
-    // Give focus to the textbox.
+    $("#textbox").val(model.currentAttempt)
+      .focus();
 
 
     // if the current word attempt contains disallowed letters,
@@ -160,7 +159,7 @@ function render() {
 
         // TODO 8
         // append the red letter chips to the form
-
+        $("#word-attempt-form").append(redLetterChips);
     }
 
     // if the game is over
@@ -168,7 +167,7 @@ function render() {
     if (gameOver) {
         // TODO 9
         // disable the text box and clear its contents
-
+        $("#textbox").attr("disabled", true).val("");
     }
 }
 
@@ -242,7 +241,9 @@ $(document).ready(function() {
     // Add another event handler with a callback function.
     // When the textbox content changes,
     // update the .currentAttempt property of the model and re-render
-
+    $("#textbox").on("input", function(){
+      model.currentAttempt = $("#textbox").val();
+    });
 
     // when the form is submitted
     $("#word-attempt-form").submit(function(evt) {
@@ -278,11 +279,15 @@ var scrabblePointsForEachLetter = {
  */
 function isDisallowedLetter(letter) {
     // TODO 7
+    if (model.allowedLetters.indexOf(letter)) {
+      return true;
+    } else {
+
     // This should return true if the letter is not an element of
     // the .allowedLetters list in the model
     return false;
 }
-
+}
 /**
  * Given a word, returns a list of all the disallowed letters in that word
  * Note that the list might be empty, if it contains only allowed letters.
