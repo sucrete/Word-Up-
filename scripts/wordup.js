@@ -74,7 +74,7 @@ function checkIfWordIsReal(word) {
     // make an AJAX call to the Pearson API
     $.ajax({
         // TODO 13 what should the url be?
-        url: "www.todo13.com",
+        url: "http://api.pearson.com/v2/dictionaries/lasde/entries",
         success: function(response) {
             console.log("We received a response from Pearson!");
 
@@ -131,16 +131,22 @@ function render() {
     // TODO 10
     // Add a few things to the above code block (underneath "// clear stuff").
     $("#textbox").removeClass("bad-attempt");
-
+    $(".disallowed-letter").remove();
+    $("#textbox").attr("disabled", false);
     // reveal the #game container
     $("#game").show();
 
     // render the letter tiles
-    var letterChips = model.allowedLetters.map(letterChip)
+    var letterChips = model.allowedLetters.map(letterChip);
     $("#allowed-letters").append(letterChips);
 
     // TODO 11
     // Render the word submissions
+
+    var wordChips = model.wordSubmissions.map(wordSubmissionChip);
+
+    // submitties2 = wordSubmissionChip(submitties);
+    $("#word-submissions").append(wordChips);
 
 
     // Set the value of the textbox
@@ -279,14 +285,7 @@ var scrabblePointsForEachLetter = {
  */
 function isDisallowedLetter(letter) {
     // TODO 7
-    if (model.allowedLetters.indexOf(letter)) {
-      return true;
-    } else {
-
-    // This should return true if the letter is not an element of
-    // the .allowedLetters list in the model
-    return false;
-}
+    return (model.allowedLetters.indexOf(letter) == -1);
 }
 /**
  * Given a word, returns a list of all the disallowed letters in that word
@@ -303,9 +302,15 @@ function disallowedLettersInWord(word) {
  */
 function containsOnlyAllowedLetters(word) {
     // TODO 12
+    if (disallowedLettersInWord(word) == false) {
+      return true;
+    } else {
+      return false;
+    }
     // Return the actual answer.
-    return true;
+
 }
+
 
 /**
  * Returns a list of 7 randomly chosen letters
