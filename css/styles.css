@@ -36,6 +36,7 @@ main {
 
 /* A smaller chip to display the score of a letter or word */
 .tag-sm {
+  
     font-size: 14px;
     margin-left: 0.4em;
 }

@@ -224,14 +224,21 @@ function wordSubmissionChip(wordSubmission) {
 
     // if we know the status of this word (real word or not), then add a green score or red X
     if (wordSubmission.hasOwnProperty("isRealWord")) {
-        var scoreChip = $("<span></span>").text("⟐");
+      var scoreChip = $("<span></span>")
+        if (wordSubmission.isRealWord == false){
+          scoreChip.text("X")
+          .attr("class", "tag-sm")
+          .attr('style', 'color: white; background-color: red; border-radius:.25rem');
+        } else {
         // TODO 17
         // give the scoreChip appropriate text content
-
+          scoreChip.text(wordScore(wordSubmission.word));
         // TODO 18
         // give the scoreChip appropriate css classes
-
-        // TODO 16
+          scoreChip.attr('class', "tag-sm")
+          .attr('style', 'background-color: blue; color: white; border-radius:.25rem');
+        }
+        // TODO 16`
         // append scoreChip into wordChip
         wordChip.append(scoreChip);
     }
@@ -357,8 +364,10 @@ function wordScore(word) {
     // TODO 19
     // Replace the empty list below.
     // Map the list of letters into a list of scores, one for each letter.
-    var letterScores = [];
 
+    var letterScores = [];
+    letterScores = letters.map(letterScore);
+    console.log(letterScores);
     // return the total sum of the letter scores
     return letterScores.reduce(add, 0);
 }
@@ -371,6 +380,7 @@ function wordScore(word) {
 function currentScore() {
     // a list of scores, one for each word submission
     var wordScores = model.wordSubmissions.map(function(submission) {
+
         if (submission.isRealWord) {
             return wordScore(submission.word);
         }
@@ -381,7 +391,7 @@ function currentScore() {
 
     // TODO 20
     // return the total sum of the word scores
-    return 0;
+    return wordScores.reduce(add, 0);
 }
 
 
