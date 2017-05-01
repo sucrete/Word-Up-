@@ -54,6 +54,12 @@ function addNewWordSubmission(word) {
     // TODO 21
     // replace the hardcoded 'false' with the real answer
     var alreadyUsed = false;
+    for (i = 0; i < model.wordSubmissions.length; i++) {
+      if (model.wordSubmissions[i].word == word) {
+        console.log(word);
+        alreadyUsed = true;
+      }
+    }
 
     // if the word is valid and hasn't already been used, add it
     if (containsOnlyAllowedLetters(word) && alreadyUsed == false) {
@@ -79,17 +85,17 @@ function checkIfWordIsReal(word) {
 
 
             // let's print the response to the console so we can take a looksie
-            console.log(response);
+
 
             // TODO 14
             // Replace the 'true' below.
             // If the response contains any results, then the word is legitimate.
             // Otherwise, it is not.
-            console.log(response.count);
+
 
             //code for what to do with json here
             if (response.count == 0){
-              console.log("heavy");
+
               for(var i = 0; i < model.wordSubmissions.length; i++) {
                 if (model.wordSubmissions[i].word == word ) {
                   model.wordSubmissions[i].isRealWord = false;
@@ -98,11 +104,11 @@ function checkIfWordIsReal(word) {
             } else {
               for (var i = 0; i < model.wordSubmissions.length; i++) {
                 if (model.wordSubmissions[i].word == word) {
-                  console.log(model.wordSubmissions[i])
+
                   model.wordSubmissions[i].isRealWord = true;
             }}}
 
-            console.log(model.wordSubmissions);
+
 
             // TODO 15
             // Update the corresponding wordSubmission in the model
@@ -367,7 +373,7 @@ function wordScore(word) {
 
     var letterScores = [];
     letterScores = letters.map(letterScore);
-    console.log(letterScores);
+
     // return the total sum of the letter scores
     return letterScores.reduce(add, 0);
 }
