@@ -76,7 +76,7 @@ function checkIfWordIsReal(word) {
         // TODO 13 what should the url be?
         url: "http://api.pearson.com/v2/dictionaries/lasde/entries?headword=" + word,
         success: function(response) {
-            console.log("We received a response from Pearson!");
+
 
             // let's print the response to the console so we can take a looksie
             console.log(response);
@@ -85,23 +85,24 @@ function checkIfWordIsReal(word) {
             // Replace the 'true' below.
             // If the response contains any results, then the word is legitimate.
             // Otherwise, it is not.
+            console.log(response.count);
 
             //code for what to do with json here
-            if (response.results !== 0){
+            if (response.count == 0){
+              console.log("heavy");
               for(var i = 0; i < model.wordSubmissions.length; i++) {
-                if (model.wordSubmissions[i] === word ) {
-                  model.wordSubmissions[i].isRealWord = true;
-                } else {
-                  for (var i = 0; i < model.wordSubmissions.length; i++) {
-                    if (model.wordSubmissions[i] === word) {
-                      model.wordSubmissions[i].isRealWord = false;
-                    }
+                if (model.wordSubmissions[i].word == word ) {
+                  model.wordSubmissions[i].isRealWord = false;
                 }
               }
-            }
+            } else {
+              for (var i = 0; i < model.wordSubmissions.length; i++) {
+                if (model.wordSubmissions[i].word == word) {
+                  console.log(model.wordSubmissions[i])
+                  model.wordSubmissions[i].isRealWord = true;
+            }}}
 
-            if (response.results === 0) {
-
+            console.log(model.wordSubmissions);
 
             // TODO 15
             // Update the corresponding wordSubmission in the model
@@ -232,7 +233,7 @@ function wordSubmissionChip(wordSubmission) {
 
         // TODO 16
         // append scoreChip into wordChip
-
+        wordChip.append(scoreChip);
     }
 
     return wordChip;
