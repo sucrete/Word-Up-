@@ -87,20 +87,22 @@ function checkIfWordIsReal(word) {
             // Otherwise, it is not.
 
             //code for what to do with json here
-            for(var i = 0; i < model.wordSubmissions.length; )
-
-            var theAnswer = response.results;
-            if (response.results === 0) {
-              model.wordSubmissions.word[word].push({ isRealWord: false });
-            } else {
-              for (var i = 0; i < theAnswer.length; i++) {
-
-                if (theAnswer[i].headword === word) {
-                console.log(theAnswer[i].headword);
-                model.wordSubmissions.word[word].push({ isRealWord: true });
+            if (response.results !== 0){
+              for(var i = 0; i < model.wordSubmissions.length; i++) {
+                if (model.wordSubmissions[i] === word ) {
+                  model.wordSubmissions[i].isRealWord = true;
+                } else {
+                  for (var i = 0; i < model.wordSubmissions.length; i++) {
+                    if (model.wordSubmissions[i] === word) {
+                      model.wordSubmissions[i].isRealWord = false;
+                    }
+                }
               }
             }
-          }
+
+            if (response.results === 0) {
+
+
             // TODO 15
             // Update the corresponding wordSubmission in the model
 
